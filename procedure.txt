@@ -1,0 +1,94 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activarcita`(IN `v_id` INT)
+BEGIN
+UPDATE cita
+SET
+estado = 'activo'
+where IDCITA = v_id;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `crear_dueno`(IN `v_nombre` VARCHAR(30), IN `v_apellidos` VARCHAR(70), IN `v_tel` VARCHAR(45), IN `v_correo` VARCHAR(45), IN `v_dir` VARCHAR(45))
+BEGIN
+ insert into dueno(nombre, apellidos, telefono, correo, direccion) values (v_nombre, v_apellidos,v_tel, v_correo, v_dir);
+end$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditMascota`(IN `a_id` INT, IN `a_nombre` VARCHAR(30), IN `a_edad` INT, IN `a_color` VARCHAR(30))
+    DETERMINISTIC
+BEGIN
+	update mascota set nombre = a_nombre, edad = a_edad, color=a_color where idMAS = a_id; 
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllAnimals`()
+    DETERMINISTIC
+BEGIN 
+	SELECT * from mascota;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AplazarCita`(IN `c_id` INT, IN `c_fecha` DATE, IN `c_tipocita` VARCHAR(30))
+    DETERMINISTIC
+BEGIN
+	update cita set fecha = c_fecha, tipocita = c_tipocita where IDCITA = c_id; 
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllCitas`()
+    DETERMINISTIC
+BEGIN
+SELECT * FROM cita;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `crear_mascota`(IN `v_nombre` VARCHAR(30), IN `v_edad` INT(10), IN `v_espe` VARCHAR(30), IN `v_raza` VARCHAR(30), IN `v_color` VARCHAR(30), IN `v_fecha` DATE, IN `v_dueno` INT)
+BEGIN
+ insert into mascota(nombre, edad, especie, raza, color, fechanac, dueno) values (v_nombre,v_edad ,v_espe, v_raza, v_color, v_fecha, v_dueno);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_cita`(IN `v_id` INT)
+BEGIN
+UPDATE cita
+SET
+estado = 'stand'
+where IDCITA = v_id;
+end$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_cita`(IN `v_fecha` DATE, IN `v_tipo` VARCHAR(45), IN `v_moitvo` VARCHAR(200), IN `v_valor` INT, IN `v_vet` INT, IN `v_mascota` INT)
+Begin
+INSERT INTO	cita (fecha, tipocita, motivo, valor, veterinario, mascota) VALUES (v_fecha, v_tipo, v_moitvo, v_valor, v_vet, v_mascota);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarcita`(IN `v_fecha` DATE)
+BEGIN
+select * from cita where fecha >= v_fecha;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarmascota`()
+BEGIN
+select * from mascota;
+end$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateDueno`(IN `d_id` INT, IN `d_telefono` VARCHAR(30), IN `d_correo` VARCHAR(30), IN `d_direccion` VARCHAR(30))
+    DETERMINISTIC
+BEGIN
+update dueno set telefono = d_telefono, correo = d_correo, direccion=d_direccion where ID = d_id; 
+END$$
+DELIMITER ;
